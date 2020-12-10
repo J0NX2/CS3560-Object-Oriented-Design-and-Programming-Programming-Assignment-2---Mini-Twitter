@@ -36,6 +36,7 @@ public class UserView extends JFrame implements Observer{
     DefaultListModel<String> followingModel;
     DefaultListModel<String> newsFeedModel;
     private JList newsFeedList;
+    private JLabel userUpdate;
 
 	public UserView(User user, ArrayList<String> userIDList, ArrayList<User> userList, HashMap<String, UserView> userViews) {
 		setTitle(user.getDisplayName());
@@ -61,11 +62,11 @@ public class UserView extends JFrame implements Observer{
         newsFeedModel = new DefaultListModel<String>();
         
         JList followingList = new JList(user.getFollowing().toArray());
-		followingList.setBounds(12, 120, 578, 129);
+		followingList.setBounds(12, 113, 578, 106);
 		contentPane.add(followingList);
 		
 		newsFeedList = new JList(user.getNewsFeed().toArray());
-		newsFeedList.setBounds(12, 363, 578, 157);
+		newsFeedList.setBounds(12, 341, 578, 146);
 		contentPane.add(newsFeedList);
 	
 		JLabel lblNewLabel = new JLabel("User ID");
@@ -106,7 +107,7 @@ public class UserView extends JFrame implements Observer{
 		
 		tweetMessage = new JTextField();
 		tweetMessage.setColumns(10);
-		tweetMessage.setBounds(12, 280, 429, 52);
+		tweetMessage.setBounds(12, 260, 429, 52);
 		contentPane.add(tweetMessage);
 		
 		JButton btnNewButton_1 = new JButton("Post Tweet");
@@ -139,24 +140,53 @@ public class UserView extends JFrame implements Observer{
 		            revalidate();
 		            repaint();
 		        }
+				userUpdate.setText("User last update at: " + Long.toString(user.getLastUpdateTime()));
 			}
 		});
-		btnNewButton_1.setBounds(453, 280, 137, 52);
+		btnNewButton_1.setBounds(453, 260, 137, 52);
 		contentPane.add(btnNewButton_1);
 		
 		JLabel lblNewLabel_1 = new JLabel("Currently Following");
-		lblNewLabel_1.setBounds(12, 103, 116, 16);
+		lblNewLabel_1.setBounds(12, 96, 116, 16);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Tweet Message");
-		lblNewLabel_1_1.setBounds(12, 262, 116, 16);
+		lblNewLabel_1_1.setBounds(12, 239, 116, 16);
 		contentPane.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("News Feed");
-		lblNewLabel_1_2.setBounds(12, 345, 116, 16);
+		lblNewLabel_1_2.setBounds(12, 325, 116, 16);
 		contentPane.add(lblNewLabel_1_2);
-		}
-
+		
+		JLabel lblNewLabel_2 = new JLabel("User created at: " + user.getCreationTime());
+		lblNewLabel_2.setBounds(12, 517, 578, 16);
+		contentPane.add(lblNewLabel_2);
+		
+		JButton btnNewButton_2 = new JButton("Last Updated User");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean userFound = false;
+				for(User users : userList) {
+					if(users.getLastUpdateTime() == user.getLastUpdateTime()) {
+						String last = users.getDisplayName();
+						JOptionPane.showMessageDialog(null, "User: " + last, "Last Updated User", JOptionPane.INFORMATION_MESSAGE);
+						userFound = true;
+						break;
+					}
+				}
+				if(!userFound) {
+					JOptionPane.showMessageDialog(null, "No updated user", "Last Updated User", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		btnNewButton_2.setBounds(431, 495, 159, 38);
+		contentPane.add(btnNewButton_2);
+		
+		userUpdate = new JLabel("User last update at: ");
+		userUpdate.setBounds(12, 500, 578, 16);
+		contentPane.add(userUpdate);
+	}
+	
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub

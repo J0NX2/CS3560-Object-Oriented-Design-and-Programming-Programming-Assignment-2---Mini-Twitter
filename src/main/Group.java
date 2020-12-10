@@ -12,6 +12,7 @@ public class Group implements SysEntry {
 	private List<User> userList = new ArrayList();
 	private String displayName;
 	private int numberOfGroups = 0;
+	private long creationTime;
 	
 	public Group() {
 		root = new DefaultMutableTreeNode("Root");
@@ -21,10 +22,15 @@ public class Group implements SysEntry {
 	public Group(String groupName) {
 		displayName = groupName;
 		numberOfGroups++;
+		creationTime = System.currentTimeMillis();
 	}
 	
 	public String getDisplayName() {
 		return displayName;
+	}
+	
+	public long getCreationTime() {
+		return creationTime;
 	}
 	
 	public void addToGroup(SysEntry sys, int index) {

@@ -17,6 +17,8 @@ public class User extends Observer implements SysEntry {
 	private int positiveMessageCount;
 	private String displayName;
 	private String[] positiveWords = {"good", "great", "excellent"};
+	private long creationTime;
+	private long lastUpdateTime;
 	
 	public User(String user) {
 		displayName = user;
@@ -25,6 +27,7 @@ public class User extends Observer implements SysEntry {
 		tweetList = new ArrayList();
 		newsFeed = new ArrayList();
 		numberOfUsers++;
+		creationTime = System.currentTimeMillis();
 	}
 	
 	public void follow(String user) {
@@ -33,6 +36,14 @@ public class User extends Observer implements SysEntry {
 	
 	public String getDisplayName() {
 		return displayName;
+	}
+	
+	public long getCreationTime() {
+		return creationTime;
+	}
+	
+	public long getLastUpdateTime() {
+		return lastUpdateTime;
 	}
 	
 	public void tweet(String tweet) {
@@ -45,6 +56,7 @@ public class User extends Observer implements SysEntry {
             }
         }
         tweetCount++;
+        lastUpdateTime = System.currentTimeMillis();
 	}
 	
 	public int getTweetCount() {
@@ -81,6 +93,7 @@ public class User extends Observer implements SysEntry {
 	
 	public void updateNewsFeed(String tweet) {
 		newsFeed.add(tweet);
+		lastUpdateTime = System.currentTimeMillis();
 	}
 	
     @Override
@@ -100,5 +113,6 @@ public class User extends Observer implements SysEntry {
 				follower.getNewsFeed().add(newsFeed.get(i));
 			}
 		}
+		lastUpdateTime = System.currentTimeMillis();
 	}
 }

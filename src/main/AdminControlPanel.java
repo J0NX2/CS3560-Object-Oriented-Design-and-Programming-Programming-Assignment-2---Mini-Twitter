@@ -18,6 +18,8 @@ import visitor.PositiveSysEntryVisitor;
 import visitor.UserTotalSysEntryVisitor;
 
 import javax.swing.JTree;
+import javax.swing.UIManager;
+
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
@@ -209,7 +211,7 @@ public class AdminControlPanel extends JFrame {
 		        }
 			}
 		});
-		btnNewButton_2.setBounds(321, 222, 449, 62);
+		btnNewButton_2.setBounds(321, 196, 449, 62);
 		contentPane.add(btnNewButton_2);
 		
 		MessageTotalSysEntryVisitor v = new MessageTotalSysEntryVisitor();
@@ -280,6 +282,34 @@ public class AdminControlPanel extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Group Id");
 		lblNewLabel_1.setBounds(321, 103, 56, 16);
 		contentPane.add(lblNewLabel_1);
+		
+		JButton btnNewButton_4_1 = new JButton("ID verification");
+		btnNewButton_4_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean verified = true;
+				for(User user : userList) {
+					if(user.getDisplayName().contains(" ")) {
+						verified = false;
+						continue;
+					}
+				}
+				
+				for(Group group : groupList) {
+					if(group.getDisplayName().contains(" ")) {
+						verified = false;
+						continue;
+					}
+				}
+				if(verified) {
+					JOptionPane.showMessageDialog(null, "All User/Group ID's are valid", "ID Verification", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Not all User/Group ID's are valid", "ID Verification", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		btnNewButton_4_1.setBounds(438, 271, 213, 62);
+		contentPane.add(btnNewButton_4_1);
 	}
 	
 	private void expandTree(JTree tree, int index, int rowCount) {
